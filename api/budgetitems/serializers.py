@@ -10,3 +10,4 @@ class BudgetItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = BudgetItem
         fields = '__all__'
+        read_only_fields = ['user']

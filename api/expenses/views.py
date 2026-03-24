@@ -8,4 +8,4 @@ class ExpenseViewSet(ModelViewSet):
 	serializer_class = ExpenseSerializer
 
 	def get_queryset(self):
-		return Expense.objects.filter(budget_item_user=self.request.user)
+		return Expense.objects.filter(budget_item__user=self.request.user)

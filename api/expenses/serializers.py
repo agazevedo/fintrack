@@ -11,6 +11,6 @@ class ExpenseSerializer(serializers.ModelSerializer):
 	def validate_budget_item(self, value):
 		user = self.context['request'].user
 
-		if value.user != user:
+		if value.user_id != user.id:
 			raise serializers.ValidationError("Budget item must belong to the authenticated user.")
 		return value
