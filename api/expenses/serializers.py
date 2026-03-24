@@ -3,6 +3,7 @@ from .models import Expense
 
 class ExpenseSerializer(serializers.ModelSerializer):
 	total = serializers.ReadOnlyField()
+	budget_item_name = serializers.CharField(source='budget_item.description', read_only=True)
 
 	class Meta:
 		model = Expense
