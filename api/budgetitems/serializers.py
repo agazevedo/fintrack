@@ -11,3 +11,19 @@ class BudgetItemSerializer(serializers.ModelSerializer):
         model = BudgetItem
         fields = '__all__'
         read_only_fields = ['user']
+
+    def validate(self, data):
+        user = self.context['request'].user
+
+        exists = BudgetItem.objects.filter(
+            user=user,
+            category=data['category'],
+            description=data['description']
+        ).exists()
+
+        if exists:
+            raise serializers.ValidationError(
+                "There is already an item with this description in this category."
+            )
+
+        return data

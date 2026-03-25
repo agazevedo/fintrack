@@ -15,3 +15,12 @@ class ExpenseSerializer(serializers.ModelSerializer):
 		if value.user_id != user.id:
 			raise serializers.ValidationError("Budget item must belong to the authenticated user.")
 		return value
+
+	def validate(self, data):
+		if Expense.objects.filter(
+			budget_item=data['budget_item'],
+			date=data['date'],
+		).exists():
+			raise serializers.ValidationError("Duplicate expense.")
+
+		return data

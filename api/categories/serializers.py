@@ -6,3 +6,14 @@ class CategorySerializer(serializers.ModelSerializer):
 		model = Category
 		fields = '__all__'
 		read_only_fields = ['user']
+
+	def validate(self, data):
+		user = self.context['request'].user
+
+		if Category.objects.filter(
+			user=user,
+			name__iexact=data['name']
+		).exists():
+			raise serializers.ValidationError("Category already exists.")
+
+		return data
