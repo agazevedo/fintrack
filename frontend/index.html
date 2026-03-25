@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<title>FinTrack</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="initDashboard()">
+	<header class="navbar">
+		<div class="nav-left">FinTrack</div>
+		<ul class="nav-right">
+			<li><a href="management.html">Gerenciamento</a></li>
+			<li><a href="index.html" class="active">Dashboard</a></li>
+			<li><a href="#" onclick="logout()">Logout</a></li>
+		</ul>
+	</header>
+
+	<main>
+		<h2>Resumo financeiro</h2>
+
+		<div id="budget-list"></div>
+	</main>
+
+	<script src="js/utils.js"></script>
+	<script src="js/api.js"></script>
+	<script src="js/dashboard.js"></script>
+</body>
+
+</html>

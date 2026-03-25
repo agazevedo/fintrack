@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Gerenciamento</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="initManagement()">
+	<header class="navbar">
+		<div class="nav-left">FinTrack</div>
+		<ul class="nav-right">
+			<li><a href="management.html" class="active">Gerenciamento</a></li>
+			<li><a href="index.html">Dashboard</a></li>
+			<li><a href="#" onclick="logout()">Logout</a></li>
+		</ul>
+	</header>
+
+	<main>
+
+		<div class="manager-box">
+
+			<!-- dropdown principal -->
+			<select id="action-select" onchange="renderForm()">
+				<option value="category">Categoria</option>
+				<option value="item">Item</option>
+				<option value="expense">Despesa</option>
+			</select>
+
+			<div id="form-container">
+
+				<!-- CATEGORY -->
+				<div id="category-form" class="form-section">
+					<div class="form-group">
+						<label>Nome da categoria</label>
+						<input id="cat-name">
+					</div>
+
+					<div class="form-group">
+						<label>Tipo</label>
+						<select id="cat-type">
+							<option value="custeio">Custeio</option>
+							<option value="capital">Capital</option>
+						</select>
+					</div>
+
+					<div class="form-actions">
+						<button id="cat-submit" >Cadastrar</button>
+						<button id="cat-cancel" style="display:none;">Cancelar</button>
+					</div>
+				</div>
+
+				<!-- ITEM -->
+				<div id="item-form" class="form-section" style="display:none;">
+					<div class="form-group">
+						<label>Categoria</label>
+						<select id="item-category"></select>
+					</div>
+
+					<div class="form-group">
+						<label>Descrição</label>
+						<input id="item-description">
+					</div>
+
+					<div class="form-group">
+						<label>Valor unitário</label>
+						<input id="item-unit_value" type="number">
+					</div>
+
+					<div class="form-group">
+						<label>Quantidade prevista</label>
+						<input id="item-quantity" type="number">
+					</div>
+
+					<div class="form-actions">
+						<button id="item-submit">Cadastrar</button>
+						<button id="item-cancel" style="display:none;">Cancelar</button>
+					</div>
+				</div>
+
+				<!-- EXPENSE -->
+				<div id="expense-form" class="form-section" style="display:none;">
+					<div class="form-group">
+						<label>Item</label>
+						<select id="exp-item"></select>
+					</div>
+
+					<div class="form-group">
+						<label>Valor unitário</label>
+						<input id="exp-value" type="number">
+					</div>
+
+					<div class="form-group">
+						<label>Quantidade</label>
+						<input id="exp-quantity" type="number">
+					</div>
+
+					<div class="form-group">
+						<label>Data</label>
+						<input id="exp-date" type="date">
+					</div>
+
+					<div class="form-actions">
+						<button id="exp-submit">Cadastrar</button>
+						<button id="exp-cancel" style="display:none;">Cancelar</button>
+					</div>
+				</div>
+
+			</div>
+
+			<div id="list-container">
+
+				<div id="category-list" class="list-section">
+					<h3>Categorias</h3>
+					<div class="list-content"></div>
+				</div>
+
+				<div id="item-list" class="list-section" style="display:none;">
+					<h3>Itens</h3>
+					<div class="list-content"></div>
+				</div>
+
+				<div id="expense-list" class="list-section" style="display:none;">
+					<h3>Despesas</h3>
+					<div class="list-content"></div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</main>
+
+	<script src="js/utils.js"></script>
+	<script src="js/api.js"></script>
+	<script src="js/management/state.js"></script>
+	<script src="js/management/category.js"></script>
+	<script src="js/management/expense.js"></script>
+	<script src="js/management/item.js"></script>
+	<script src="js/management/index.js"></script>
+</body>
+
+</html>
