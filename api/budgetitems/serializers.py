@@ -15,13 +15,16 @@ class BudgetItemSerializer(serializers.ModelSerializer):
     def validate(self, data):
         user = self.context['request'].user
 
-        exists = BudgetItem.objects.filter(
+        queryset = BudgetItem.objects.filter(
             user=user,
             category=data['category'],
             description=data['description']
-        ).exists()
+        )
 
-        if exists:
+        if self.instance:
+            queryset = queryset.exclude(id=self.instance.id)
+
+        if queryset.exists():
             raise serializers.ValidationError(
                 "There is already an item with this description in this category."
             )

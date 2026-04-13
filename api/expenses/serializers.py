@@ -8,6 +8,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Expense
 		fields = '__all__'
+		read_only_fields = ['user']
 
 	def validate_budget_item(self, value):
 		user = self.context['request'].user
@@ -17,10 +18,15 @@ class ExpenseSerializer(serializers.ModelSerializer):
 		return value
 
 	def validate(self, data):
-		if Expense.objects.filter(
+		queryset = Expense.objects.filter(
 			budget_item=data['budget_item'],
 			date=data['date'],
-		).exists():
+		)
+
+		if self.instance:
+			queryset = queryset.exclude(id=self.instance.id)
+
+		if queryset.exists():
 			raise serializers.ValidationError("Duplicate expense.")
 
 		return data

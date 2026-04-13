@@ -10,10 +10,15 @@ class CategorySerializer(serializers.ModelSerializer):
 	def validate(self, data):
 		user = self.context['request'].user
 
-		if Category.objects.filter(
+		queryset = Category.objects.filter(
 			user=user,
 			name__iexact=data['name']
-		).exists():
+		)
+
+		if self.instance:
+			queryset = queryset.exclude(id=self.instance.id)
+
+		if queryset.exists():
 			raise serializers.ValidationError("Category already exists.")
 
 		return data
