@@ -21,10 +21,23 @@
 		<h2>Resumo financeiro</h2>
 
 		<div id="budget-list"></div>
+
+		<div class="charts-container">
+			<div class="card">
+				<h3>Gastos por categoria</h3>
+				<canvas id="category-chart"></canvas>
+			</div>
+
+			<div class="card">
+				<h3>Resumo</h3>
+				<canvas id="finance-chart"></canvas>
+			</div>
+		</div>
 	</main>
 
 	<script src="js/utils.js"></script>
 	<script src="js/api.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="js/dashboard.js"></script>
 </body>
 

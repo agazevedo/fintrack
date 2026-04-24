@@ -15,7 +15,7 @@ header {
 	border-bottom: 1px solid #333;
 }
 
-h3 {
+h2, h3 {
 	margin-bottom: 0.5em;
 	font-weight: 500;
 	color: #ccc;
@@ -135,6 +135,18 @@ select#action-select {
 #login-form h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+
+
+.charts-container {
+	display: flex;
+	gap: 1em;
+	align-items: stretch;
+	flex-wrap: wrap;
+}
+
+.charts-container h3 {
+	text-align: center;
 }
 
 
