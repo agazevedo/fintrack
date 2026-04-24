@@ -58,6 +58,8 @@ async function createItem(e) {
 
 	setLoading(button, true);
 
+	const isEditing = !!state.item.editingId;
+
 	try {
 		let url = `${API_BASE}/budget-items/`;
 		let method = "POST";
@@ -90,7 +92,8 @@ async function createItem(e) {
 			return;
 		}
 
-		showToast("Item criado com sucesso!");
+		const action = isEditing ? "atualizado" : "criado";
+		showToast(`Item ${action} com sucesso!`);
 		resetItemForm();
 		await loadItemsList();
 	} catch (err) {
@@ -116,19 +119,24 @@ function editItem(id, description, value, quantity, category) {
 	document.getElementById("item-category").value = category;
 	state.item.editingId = id;
 
-	document.getElementById("item-submit").innerText = "Atualizar";
-	document.getElementById("item-cancel").style.display = "inline-block";
+	updateItemFormUI();
 }
 
 function resetItemForm() {
 	document.getElementById("item-description").value = "";
 	document.getElementById("item-unit_value").value = "";
 	document.getElementById("item-quantity").value = "";
-	document.getElementById("item-category").selectedIndex = 0;
+	// document.getElementById("item-category").selectedIndex = 0;
 	state.item.editingId = null;
 
-	document.getElementById("item-submit").innerText = "Cadastrar";
-	document.getElementById("item-cancel").style.display = "none";
+	updateItemFormUI();
+}
+
+function updateItemFormUI() {
+	const isEditing = !!state.item.editingId;
+
+	document.getElementById("item-submit").innerText = isEditing ? "Atualizar" : "Cadastrar";
+	document.getElementById("item-cancel").style.display = isEditing ? "inline-block" : "none";
 }
 
 async function populateCategorySelect() {

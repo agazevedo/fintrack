@@ -51,6 +51,8 @@ async function createCategory(e) {
 
 	setLoading(button, true);
 
+	const isEditing = !!state.category.editingId;
+
 	try {
 		let url = `${API_BASE}/categories/`;
 		let method = "POST";
@@ -81,10 +83,10 @@ async function createCategory(e) {
 			return;
 		}
 
-		showToast("Salvo com sucesso!");
+		const action = isEditing ? "atualizada" : "criada";
+		showToast(`Categoria ${action} com sucesso!`);
 		resetCategoryForm();
 		await loadCategoriesList();
-
 	} catch (err) {
 		console.log(err);
 		showToast("Erro inesperado", true);
@@ -106,8 +108,7 @@ function editCategory(id, name, type) {
 	document.getElementById("cat-type").value = type;
 	state.category.editingId = id;
 
-	document.getElementById("cat-submit").innerText = "Atualizar";
-	document.getElementById("cat-cancel").style.display = "inline-block";
+	updateCategoryFormUI();
 }
 
 function resetCategoryForm() {
@@ -115,6 +116,12 @@ function resetCategoryForm() {
 	document.getElementById("cat-type").value = "custeio";
 	state.category.editingId = null;
 
-	document.getElementById("cat-submit").innerText = "Cadastrar";
-	document.getElementById("cat-cancel").style.display = "none";
+	updateCategoryFormUI();
+}
+
+function updateCategoryFormUI() {
+	const isEditing = !!state.category.editingId;
+
+	document.getElementById("cat-submit").innerText = isEditing ? "Atualizar" : "Cadastrar";
+	document.getElementById("cat-cancel").style.display = isEditing ? "inline-block" : "none";
 }

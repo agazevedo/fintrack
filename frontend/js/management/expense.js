@@ -58,6 +58,8 @@ async function createExpense(e) {
 
 	setLoading(button, true);
 
+	const isEditing = !!state.expense.editingId;
+
 	try {
 		let url = `${API_BASE}/expenses/`;
 		let method = "POST";
@@ -90,7 +92,8 @@ async function createExpense(e) {
 			return;
 		}
 
-		showToast("Despesa criada com sucesso!");
+		const action = isEditing ? "atualizada" : "criada";
+		showToast(`Despesa ${action} com sucesso!`);
 		resetExpenseForm();
 		await loadExpensesList();
 	} catch (err) {
@@ -116,19 +119,25 @@ function editExpense(id, item, value, quantity, date) {
 	document.getElementById("exp-date").value = date;
 	state.expense.editingId = id;
 
-	document.getElementById("exp-submit").innerText = "Atualizar";
-	document.getElementById("exp-cancel").style.display = "inline-block";
+	updateExpenseFormUI();
 }
 
 function resetExpenseForm() {
-	document.getElementById("exp-item").selectedIndex = 0;
+	// document.getElementById("exp-category").selectedIndex = 0;
+	// document.getElementById("exp-item").selectedIndex = 0;
 	document.getElementById("exp-value").value = "";
 	document.getElementById("exp-quantity").value = "";
 	document.getElementById("exp-date").value = "";
 	state.expense.editingId = null;
 
-	document.getElementById("exp-submit").innerText = "Cadastrar";
-	document.getElementById("exp-cancel").style.display = "none";
+	updateExpenseFormUI();
+}
+
+function updateExpenseFormUI() {
+	const isEditing = !!state.expense.editingId;
+
+	document.getElementById("exp-submit").innerText = isEditing ? "Atualizar" : "Cadastrar";
+	document.getElementById("exp-cancel").style.display = isEditing ? "inline-block" : "none";
 }
 
 async function populateItemSelect(categoryId = null) {
