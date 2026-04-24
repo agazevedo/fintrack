@@ -150,6 +150,25 @@ select#action-select {
 }
 
 
+#details-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+
+#details-table th,
+#details-table td {
+	padding: 8px;
+	border-bottom: 1px solid #333;
+	text-align: left;
+}
+
+#details-table th {
+	color: #aaa;
+	font-weight: 500;
+}
+
+
 .manager-box {
 	max-width: 50%;
 	margin: 2.5em auto;

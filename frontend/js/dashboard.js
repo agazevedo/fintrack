@@ -62,19 +62,52 @@ function renderSummary(totalPlanned, totalSpent, totalRemaining) {
 	`;
 }
 
-function renderBudgetItems(items) {
-	const container = document.getElementById("budget-list");
-	container.innerHTML = "";
+// function renderBudgetItems(items) {
+// 	const container = document.getElementById("budget-list");
+// 	container.innerHTML = "";
 
-	items.forEach(item => {
-		container.innerHTML += `
-			<div class="card">
-				<h3>${item.description}</h3>
-				<p>Previsto: R$ ${Number(item.budget_total).toFixed(2)}</p>
-				<p>Gasto: R$ ${Number(item.spent).toFixed(2)}</p>
-			</div>
+// 	items.forEach(item => {
+// 		container.innerHTML += `
+// 			<div class="card">
+// 				<h3>${item.description}</h3>
+// 				<p>Previsto: R$ ${Number(item.budget_total).toFixed(2)}</p>
+// 				<p>Gasto: R$ ${Number(item.spent).toFixed(2)}</p>
+// 			</div>
+// 		`;
+// 	});
+// }
+
+async function showCategoryDetails(categoryName) {
+	const res = await fetchWithAuth(`${API_BASE}/expenses/`);
+
+	if (!res.ok) {
+		showToast("Erro ao carregar detalhes", true);
+		return;
+	}
+
+	const expenses = await res.json();
+
+	// filtrar só da categoria
+	const filtered = expenses.filter(e => e.category_name === categoryName);
+
+	const container = document.getElementById("details-container");
+	const title = document.getElementById("details-title");
+	const tbody = document.querySelector("#details-table tbody");
+
+	title.innerText = `Detalhes - ${categoryName}`;
+	tbody.innerHTML = "";
+
+	filtered.forEach(e => {
+		tbody.innerHTML += `
+			<tr>
+				<td>${e.date}</td>
+				<td>${e.budget_item_name}</td>
+				<td>R$ ${Number(e.total).toFixed(2)}</td>
+			</tr>
 		`;
 	});
+
+	container.style.display = "block";
 }
 
 let chart;
@@ -145,6 +178,14 @@ function renderCategoryChart(data) {
 						font: {size: 14},
 						color: "#e0e0e0"
 					}
+				}
+			},
+			onClick: (evt, elements) => {
+				if (elements.length > 0) {
+					const index = elements[0].index;
+					const categoria = data[index].categoria;
+
+					showCategoryDetails(categoria);
 				}
 			}
 		}
