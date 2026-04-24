@@ -180,6 +180,7 @@ select#action-select {
 
 .form-group input,
 .form-group select {
+	margin-bottom: 1em;
 	padding: 0.5em;
 	background: #1e1e1e;
 	border: 1px solid #333;
