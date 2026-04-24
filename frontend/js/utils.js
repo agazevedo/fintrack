@@ -39,11 +39,11 @@ function showToast(message, isError = false) {
 function setLoading(button, isLoading) {
 	if (isLoading) {
 		button.classList.add("loading");
-		button.dataset.originalText = button.innerText;
+		// button.dataset.originalText = button.innerText;
 		button.innerText = "Salvando...";
 	} else {
 		button.classList.remove("loading");
-		button.innerText = button.dataset.originalText;
+		// button.innerText = button.dataset.originalText;
 	}
 }
 
