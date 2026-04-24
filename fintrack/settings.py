@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i6$%&9%cgwwefd85!$g9o5_^08k$7)$*%pfoq_fj1_f9i%kqd9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -158,3 +158,5 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ),
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
