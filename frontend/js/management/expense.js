@@ -131,9 +131,33 @@ function resetExpenseForm() {
 	document.getElementById("exp-cancel").style.display = "none";
 }
 
-async function populateItemSelect() {
+async function populateItemSelect(categoryId = null) {
 	const items = await fetchItems();
 
-	document.getElementById("exp-item").innerHTML =
-		items.map(i => `<option value="${i.id}">${i.description}</option>`).join("");
+	const filtered = categoryId
+		? items.filter(i => i.category == categoryId)
+		: items;
+
+	document.getElementById("exp-item").innerHTML = filtered.map(i => `<option value="${i.id}">${i.description}</option>`).join("");
+}
+
+async function populateExpenseCategorySelect() {
+	const [categories, items] = await Promise.all([
+		fetchCategories(),
+		fetchItems()
+	]);
+
+	// pega ids das categorias que têm itens
+	const categoryIdsWithItems = new Set(items.map(i => i.category));
+
+	// filtra categorias
+	const filtered = categories.filter(c => categoryIdsWithItems.has(c.id));
+
+	if (filtered.length === 0) {
+		document.getElementById("exp-category").innerHTML =
+			`<option disabled selected>Sem categorias com itens</option>`;
+		return;
+	}
+
+	document.getElementById("exp-category").innerHTML = filtered.map(c => `<option value="${c.id}">${c.name}</option>`).join("");
 }

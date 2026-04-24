@@ -30,7 +30,12 @@ async function renderForm() {
 	await loaders[value]?.();
 
 	if (value === "item") await populateCategorySelect();
-	if (value === "expense") await populateItemSelect();
+	if (value === "expense") {
+		await populateExpenseCategorySelect();
+
+		const categorySelect = document.getElementById("exp-category");
+		await populateItemSelect(categorySelect.value);
+	}
 }
 
 function setupEventListeners() {
@@ -42,4 +47,9 @@ function setupEventListeners() {
 
 	document.getElementById("exp-submit")
 		.addEventListener("click", createExpense);
+
+	document.getElementById("exp-category")
+		.addEventListener("change", (e) => {
+			populateItemSelect(e.target.value);
+		});
 }
