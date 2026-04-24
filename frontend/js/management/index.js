@@ -52,4 +52,13 @@ function setupEventListeners() {
 		.addEventListener("change", (e) => {
 			populateItemSelect(e.target.value);
 		});
+
+	document.getElementById("item-cancel")
+		.addEventListener("click", resetItemForm);
+
+	document.getElementById("cat-cancel")
+		.addEventListener("click", resetCategoryForm);
+
+	document.getElementById("exp-cancel")
+		.addEventListener("click", resetExpenseForm);
 }
