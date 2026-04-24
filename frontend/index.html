@@ -33,21 +33,29 @@
 				<canvas id="finance-chart"></canvas>
 			</div>
 		</div>
-
-		<div id="details-container" class="card" style="display:none;">
-			<h3 id="details-title"></h3>
-			<table id="details-table">
-				<thead>
-					<tr>
-						<th>Data</th>
-						<th>Item</th>
-						<th>Valor</th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-		</div>
 	</main>
+
+	<div id="modal" class="modal hidden">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="modal-title"></h3>
+				<button id="modal-close">✖</button>
+			</div>
+
+			<div class="modal-body">
+				<table id="modal-table">
+					<thead>
+						<tr>
+							<th>Data</th>
+							<th>Item</th>
+							<th>Valor</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
 	<script src="js/utils.js"></script>
 	<script src="js/api.js"></script>

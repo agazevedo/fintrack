@@ -62,20 +62,19 @@ function renderSummary(totalPlanned, totalSpent, totalRemaining) {
 	`;
 }
 
-// function renderBudgetItems(items) {
-// 	const container = document.getElementById("budget-list");
-// 	container.innerHTML = "";
 
-// 	items.forEach(item => {
-// 		container.innerHTML += `
-// 			<div class="card">
-// 				<h3>${item.description}</h3>
-// 				<p>Previsto: R$ ${Number(item.budget_total).toFixed(2)}</p>
-// 				<p>Gasto: R$ ${Number(item.spent).toFixed(2)}</p>
-// 			</div>
-// 		`;
-// 	});
-// }
+document.getElementById("modal").addEventListener("click", (e) => {
+	if (e.target.id === "modal") {
+		closeModal();
+	}
+});
+
+document.getElementById("modal-close").addEventListener("click", closeModal);
+
+function closeModal() {
+	document.getElementById("modal").classList.add("hidden");
+}
+
 
 async function showCategoryDetails(categoryName) {
 	const res = await fetchWithAuth(`${API_BASE}/expenses/`);
@@ -87,14 +86,13 @@ async function showCategoryDetails(categoryName) {
 
 	const expenses = await res.json();
 
-	// filtrar só da categoria
 	const filtered = expenses.filter(e => e.category_name === categoryName);
 
-	const container = document.getElementById("details-container");
-	const title = document.getElementById("details-title");
-	const tbody = document.querySelector("#details-table tbody");
+	const modal = document.getElementById("modal");
+	const title = document.getElementById("modal-title");
+	const tbody = document.querySelector("#modal-table tbody");
 
-	title.innerText = `Detalhes - ${categoryName}`;
+	title.innerText = `Categoria: ${categoryName}`;
 	tbody.innerHTML = "";
 
 	filtered.forEach(e => {
@@ -107,8 +105,9 @@ async function showCategoryDetails(categoryName) {
 		`;
 	});
 
-	container.style.display = "block";
+	modal.classList.remove("hidden");
 }
+
 
 let chart;
 
