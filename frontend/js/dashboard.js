@@ -75,6 +75,20 @@ function closeModal() {
 	document.getElementById("modal").classList.add("hidden");
 }
 
+document.querySelectorAll(".tab-btn").forEach(btn => {
+	btn.addEventListener("click", () => {
+		// botão ativo
+		document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+		btn.classList.add("active");
+
+		// conteúdo
+		document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+
+		const tab = btn.dataset.tab;
+		document.getElementById(`tab-${tab}`).classList.add("active");
+	});
+});
+
 
 async function showCategoryDetails(categoryName) {
 	const res = await fetchWithAuth(`${API_BASE}/expenses/`);
@@ -90,13 +104,30 @@ async function showCategoryDetails(categoryName) {
 
 	const modal = document.getElementById("modal");
 	const title = document.getElementById("modal-title");
-	const tbody = document.querySelector("#modal-table tbody");
+
+	const expensesBody = document.getElementById("expenses-body");
+	const itemsBody = document.getElementById("items-body");
+	const summary = document.getElementById("tab-summary");
 
 	title.innerText = `Categoria: ${categoryName}`;
-	tbody.innerHTML = "";
 
+	// limpar
+	expensesBody.innerHTML = "";
+	itemsBody.innerHTML = "";
+	summary.innerHTML = "";
+
+	// 📊 RESUMO
+	let total = 0;
+	filtered.forEach(e => total += Number(e.total));
+
+	summary.innerHTML = `
+		<p>Total gasto: <strong>R$ ${total.toFixed(2)}</strong></p>
+		<p>Quantidade de despesas: ${filtered.length}</p>
+	`;
+
+	// 📄 DESPESAS
 	filtered.forEach(e => {
-		tbody.innerHTML += `
+		expensesBody.innerHTML += `
 			<tr>
 				<td>${e.date}</td>
 				<td>${e.budget_item_name}</td>
@@ -105,7 +136,35 @@ async function showCategoryDetails(categoryName) {
 		`;
 	});
 
+	// 📦 ITENS (agrupado)
+	const itemMap = {};
+
+	filtered.forEach(e => {
+		const name = e.budget_item_name;
+
+		if (!itemMap[name]) itemMap[name] = 0;
+
+		itemMap[name] += Number(e.total);
+	});
+
+	Object.entries(itemMap).forEach(([item, total]) => {
+		itemsBody.innerHTML += `
+			<tr>
+				<td>${item}</td>
+				<td>R$ ${total.toFixed(2)}</td>
+			</tr>
+		`;
+	});
+
+	// abrir modal
 	modal.classList.remove("hidden");
+
+	// reset aba pra resumo
+	document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+	document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+
+	document.querySelector('[data-tab="summary"]').classList.add("active");
+	document.getElementById("tab-summary").classList.add("active");
 }
 
 

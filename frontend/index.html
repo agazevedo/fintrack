@@ -37,23 +37,50 @@
 
 	<div id="modal" class="modal hidden">
 		<div class="modal-content">
+
 			<div class="modal-header">
 				<h3 id="modal-title"></h3>
 				<button id="modal-close">✖</button>
 			</div>
 
-			<div class="modal-body">
-				<table id="modal-table">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Item</th>
-							<th>Valor</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
+			<!-- abas -->
+			<div class="modal-tabs">
+				<button class="tab-btn active" data-tab="summary">Resumo</button>
+				<button class="tab-btn" data-tab="expenses">Despesas</button>
+				<button class="tab-btn" data-tab="items">Itens</button>
 			</div>
+
+			<div class="modal-body">
+
+				<div id="tab-summary" class="tab-content active"></div>
+
+				<div id="tab-expenses" class="tab-content">
+					<table>
+						<thead>
+							<tr>
+								<th>Data</th>
+								<th>Item</th>
+								<th>Valor</th>
+							</tr>
+						</thead>
+						<tbody id="expenses-body"></tbody>
+					</table>
+				</div>
+
+				<div id="tab-items" class="tab-content">
+					<table>
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Total gasto</th>
+							</tr>
+						</thead>
+						<tbody id="items-body"></tbody>
+					</table>
+				</div>
+
+			</div>
+
 		</div>
 	</div>
 
