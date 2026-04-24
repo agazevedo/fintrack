@@ -21,8 +21,8 @@ async function loadExpensesList() {
 			<div class="list-item">
 				<span>
 					${e.budget_item_name}<br>
-					R$ ${e.unit_value} x ${e.quantity} =
-					<strong>R$ ${Number(e.total).toFixed(2)}</strong>
+					[${e.category_name}]<br>
+					R$ ${e.unit_value} x ${e.quantity} = <strong>R$ ${Number(e.total).toFixed(2)}</strong>
 				</span>
 				<div>
 					<button onclick="editExpense(${e.id}, ${e.budget_item}, ${e.unit_value}, ${e.quantity}, \`${e.date}\`)">✏️</button>

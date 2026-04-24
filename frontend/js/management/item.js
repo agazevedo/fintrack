@@ -22,7 +22,7 @@ async function loadItemsList() {
 				<span>
 					${i.description}<br>
 					[${i.category_name}]<br>
-					Previsto: R$ ${i.budget_total}
+					Previsto: R$ ${i.unit_value} x ${i.quantity} = R$ ${i.budget_total}
 				</span>
 				<div>
 					<button onclick="editItem(${i.id}, \`${i.description}\`, ${i.unit_value}, ${i.quantity}, ${i.category})">✏️</button>
